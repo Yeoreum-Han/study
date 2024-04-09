@@ -13,16 +13,16 @@ let a2:Array<number> = [1,2,3];
 let n:null = null;
 let u:undefined = undefined;
 
-**튜플(Tuple) : 배열요소마다 다른 타입일 때
+**튜플(Tuple) : 배열요소마다 다른 타입일 때**
 let b:[string, number];
 b = ['a', 2];
 
-**void : 함수에서 아무것도 반환하지 않을 때
+**void : 함수에서 아무것도 반환하지 않을 때**
 function sayHello():void{
     console.log('hello');
 }
 
-**never : 에러를 반환하거나 무한루프인 함수 일 때
+**never : 에러를 반환하거나 무한루프인 함수 일 때**
 function showError(){
     throw new Error();
 }
@@ -32,7 +32,7 @@ function infLoop(){
     }
 }
 
-**enum : 비슷한 것끼리 묶을 때
+**enum : 비슷한 것끼리 묶을 때**
 enum Os { Window = 'win', Ios = 'ios', Android = 'and' }
 let myOs:Os;    //myOs는 Os타입으로 지정되고 Os요소중의 값만 가질 수 있다.
 myOs = Os.Window
@@ -354,3 +354,30 @@ type T2 = Exclude<T1, number | string>;
 null, undefined를 제외한 타입을 생성
 type T1 = string | null | undefined | void;
 type T2 = NonNullable<T1>;
+
+
+
+#### Dom에서 사용할 때
+
+**non-null 처리**
+1. ?
+btn?.addEventListener("click", function(){
+    alert("Clicked!");
+});
+btn은 HTMLElement 또는 null 이므로 옵션을 줘서 에러발생 방지, null이면 코드실행X
+
+2. !
+const btn = document.getElementById("btn")!;
+무조건 null이 아님. - 확실할 때만 사용
+
+
+**타입 단언 as/<HTMLInputElement>**
+const mystery: unknown = "Hello world!";
+const numChars = (mystery as string).length;
+-> 이 줄에서 mystery를 문자열로 취급한다.
+
+const input = document.getElementById("todoinput")! as HTMLInputElement;
+alert(input.value);
+
+const input = document.getElementById("todoinput")!;
+(<HTMLInputElement>input).value;
